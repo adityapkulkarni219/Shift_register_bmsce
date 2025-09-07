@@ -26,9 +26,9 @@ module tt_um_shift (
         .load (ui_in[0]),
         .serial_input (ui_in[1]),
         .direction (ui_in[2]),
-        .parallel_load[3:0] (ui_in[6:3])
-        .parallel_out[3:0] (uo_out[3:0])
-    )
+        .parallel_load (ui_in[6:3])
+        .parallel_out (uo_out[3:0])
+    );
       
     assign uo_out[7:4] = 4'b0;
     
