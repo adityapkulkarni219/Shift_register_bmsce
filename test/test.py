@@ -26,39 +26,39 @@ async def test_project(dut):
     dut._log.info("Test project behavior")
 
      # --- Test 1: Parallel Load ---
-    dut.load.value = 1
-    dut.parallel_load.value = 0b1011
+    dut.ui_in[0].value = 1
+    dut.ui_in[6:3].value = 0b1011
     await RisingEdge(dut.clk)
-    dut.load.value = 0
-    assert dut.parallel_out.value == 0b1011, f"Parallel load failed! Got {dut.parallel_out.value}"
+    dut.ui_in[0].value = 0
+    assert dut.uo_out[3:0].value == 0b1011, f"Parallel load failed! Got {dut.parallel_out.value}"
 
     # --- Test 2: Shift Right ---
-    dut.direction.value = 0  # shift right
-    dut.serial_input.value = 1
+    dut.ui_in[2].value = 0  # shift right
+    dut.ui_in[1].value = 1
     for _ in range(3):
         await RisingEdge(dut.clk)
-        cocotb.log.info(f"Shift Right -> {dut.parallel_out.value.binstr}")
+        cocotb.log.info(f"Shift Right -> {dut.uo_out[3:0].value.binstr}")
 
     # --- Test 3: Shift Left ---
-    dut.direction.value = 1  # shift left
-    dut.serial_input.value = 0
+    dut.ui_in[2].value = 1  # shift left
+    dut.ui_in[1].value = 0
     for _ in range(3):
         await RisingEdge(dut.clk)
-        cocotb.log.info(f"Shift Left -> {dut.parallel_out.value.binstr}")
+        cocotb.log.info(f"Shift Left -> {dut.uo_out[3:0].value.binstr}")
 
     # --- Test 4: Parallel Load again ---
-    dut.load.value = 1
-    dut.parallel_load.value = 0b1100
+    dut.ui_in[0].value = 1
+    dut.ui_in[6:3].value = 0b1100
     await RisingEdge(dut.clk)
     dut.load.value = 0
-    assert dut.parallel_out.value == 0b1100, f"Second parallel load failed! Got {dut.parallel_out.value}"
+    assert dut.uo_out[3:0].value == 0b1100, f"Second parallel load failed! Got {dut.uo_out[3:0].value}"
 
     # --- Final: Extra Right Shifts ---
-    dut.direction.value = 0
-    dut.serial_input.value = 1
+    dut.ui_in[2].value = 0
+    dut.ui_in[1].value = 1
     for _ in range(4):
         await RisingEdge(dut.clk)
-        cocotb.log.info(f"Final Shift Right -> {dut.parallel_out.value.binstr}")
+        cocotb.log.info(f"Final Shift Right -> {dut.uo_out[3:0].value.binstr}")
 
     cocotb.log.info("✅ All tests passed!")
 
