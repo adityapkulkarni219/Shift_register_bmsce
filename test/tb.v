@@ -34,5 +34,42 @@ module tb ();
       .clk    (clk),      // clock
       .rst_n  (rst_n)     // not reset
   );
+initial begin
+        // Initialize signals
+      
+        clk = 0;
+        rst_n = 1;
+        load = 0;
+        direction = 0;
+        serial_input = 0;
+        parallel_load = 4'b0000;
 
+        // Apply reset
+        #10 reset = 0;
+
+        // Parallel load = 1011
+        #10 load = 1; parallel_load = 4'b1011;
+        #10 load = 0;  // disable load
+
+        // Shift right with serial input = 1
+        direction = 0;
+        serial_input = 1;
+        #40;
+
+        // Shift left with serial input = 0
+        direction = 1;
+        serial_input = 0;
+        #40;
+
+        // Parallel load again = 1100
+        load = 1; parallel_load = 4'b1100;
+        #10 load = 0;
+
+        // More right shifts with serial input = 1
+        direction = 0;
+        serial_input = 1;
+        #40;
+      	
+      	$finish;
+    end
 endmodule
