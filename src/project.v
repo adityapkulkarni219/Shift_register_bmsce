@@ -28,6 +28,8 @@ module tt_um_shift (
     );
       
     assign uo_out[7:4] = 4'b0;
+    assign uio_out[7:0] = 8'b0;
+    assign uio_oe [7:0] = 8'b0;
     
   // List all unused inputs to prevent warnings
     wire _unused = &{ena,1'b0,  uio_in[7:0], uio_out[7:0], uio_oe[7:0], ui_in[7]};
