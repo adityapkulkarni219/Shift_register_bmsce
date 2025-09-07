@@ -20,10 +20,16 @@ module tt_um_shift (
     assign load = ui_in[0];
     assign serial_input = ui_in[1];
     assign direction = ui_in[2];
-    assign parallel_load = ui_in[3];
+    assign parallel_load[0] = ui_in[3];
+    assign parallel_load[1] = ui_in[4];
+    assign parallel_load[2] = ui_in[5];
+    assign parallel_load[3] = ui_in[6];
 
-    assign parallel_out = uo_out[0];
-    assign uo_out[7:1] = 7'b0;
+    assign parallel_out[0] = uo_out[0];
+    assign parallel_out[1] = uo_out[1];
+    assign parallel_out[2] = uo_out[2];
+    assign parallel_out[3] = uo_out[3];
+    assign uo_out[7:4] = 4'b0;
     
     always @(posedge clk or posedge rst_n) begin
       if (rst_n) begin
