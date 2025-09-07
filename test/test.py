@@ -14,6 +14,7 @@ async def test_project(dut):
     # Set the clock period to 10 us (100 KHz)
     clock = Clock(dut.clk, 10, units="us")
     cocotb.start_soon(clock.start())
+    uo_out[3:0] = parallel_out
 
     # Reset
     dut._log.info("Reset")
@@ -41,14 +42,14 @@ async def test_project(dut):
     dut.ui_in[1].value = 1
     for _ in range(3):
         await RisingEdge(dut.clk)
-        cocotb.log.info(f"Shift Right -> {dut.uo_out[3:0].value.binstr}")
+        cocotb.log.info(f"Shift Right -> {dut.parallel_out.value.binstr}")
 
     # --- Test 3: Shift Left ---
     dut.ui_in[2].value = 1  # shift left
     dut.ui_in[1].value = 0
     for _ in range(3):
         await RisingEdge(dut.clk)
-        cocotb.log.info(f"Shift Left -> {dut.uo_out[3:0].value.binstr}")
+        cocotb.log.info(f"Shift Left -> {dut.parallel_out.value.binstr}")
 
     # --- Test 4: Parallel Load again ---
     dut.ui_in[0].value = 1
@@ -65,7 +66,7 @@ async def test_project(dut):
     dut.ui_in[1].value = 1
     for _ in range(4):
         await RisingEdge(dut.clk)
-        cocotb.log.info(f"Final Shift Right -> {dut.uo_out[3:0].value.binstr}")
+        cocotb.log.info(f"Final Shift Right -> {dut.parallel_out.value.binstr}")
 
     cocotb.log.info("✅ All tests passed!")
 
