@@ -22,7 +22,7 @@ module tt_um_shift (
 
     shift_register_design mydesign(
         .clk (clk),
-        .reset (rst_in),
+        .reset (rst_n),
         .load (ui_in[0]),
         .serial_input (ui_in[1]),
         .direction (ui_in[2]),
