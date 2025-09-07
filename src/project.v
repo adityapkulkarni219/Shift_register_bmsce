@@ -27,10 +27,10 @@ module tt_um_shift (
         .parallel_out (uo_out[3:0])
     );
       
-    //assign uo_out[7:4] = 4'b0;
+    assign uo_out[7:4] = 4'b0;
     
   // List all unused inputs to prevent warnings
-    wire _unused = &{ena,1'b0,  uio_in[7:0], uio_out[7:0], uio_oe[7:0], uo_out[7:4]};
+    wire _unused = &{ena,1'b0,  uio_in[7:0], uio_out[7:0], uio_oe[7:0], ui_in[7]};
 
 endmodule
 
