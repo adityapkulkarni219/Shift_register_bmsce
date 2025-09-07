@@ -46,8 +46,18 @@ How It Works (Step by Step)
    If somehow direction is invalid (shouldn’t happen since it’s 1 bit), output clears to 0000.
 ## How to test
 
-Explain how to use your project
+At time 0–10 ns → reset=1, so parallel_out=0000.
+
+At time 20 ns → load=1, register loads 1011.
+
+Next few cycles with direction=0 → register shifts right, new bits enter from serial_input.
+
+Later with direction=1 → register shifts left.
+
+Another load happens → register becomes 1100.
+
+Final cycles → more shifts happen.
 
 ## External hardware
 
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+No external hardware is required besides  TT demo board.
