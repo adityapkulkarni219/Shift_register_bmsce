@@ -33,7 +33,7 @@ COMPILE_ARGS 		+= -I$(SRC_DIR)
 
 # Include the testbench sources:
 VERILOG_SOURCES += $(PWD)/tb.v
-TOPLEVEL = shift_register_design
+TOPLEVEL = tt_um_shift
 
 # MODULE is the basename of the Python test file
 MODULE = test
