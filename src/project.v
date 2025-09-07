@@ -16,23 +16,39 @@ module tt_um_shift (
     input  wire       rst_n     // reset_n - low to reset
 );
 
+    assign uio_in = 0;
+    assign uio_out = 0;
+    assign uio_oe = 0;
 
-    assign load = ui_in[0];
-    assign serial_input = ui_in[1];
-    assign direction = ui_in[2];
-    assign parallel_load[0] = ui_in[3];
-    assign parallel_load[1] = ui_in[4];
-    assign parallel_load[2] = ui_in[5];
-    assign parallel_load[3] = ui_in[6];
-
-    assign parallel_out[0] = uo_out[0];
-    assign parallel_out[1] = uo_out[1];
-    assign parallel_out[2] = uo_out[2];
-    assign parallel_out[3] = uo_out[3];
+    shift_register_design mydesign(
+        .clk (clk),
+        .reset (rst_in),
+        .load (ui_in[0]),
+        .serial_input (ui_in[1]),
+        .direction (ui_in[2]),
+        .parallel_load[3:0] (ui_in[6:3])
+        .parallel_out[3:0] (uo_out[3:0])
+    )
+      
     assign uo_out[7:4] = 4'b0;
     
-    always @(posedge clk or posedge rst_n) begin
-      if (rst_n) begin
+  // List all unused inputs to prevent warnings
+  wire _unused = &{ena,1'b0};
+
+endmodule
+
+module shift_register_design(
+    input clk,
+    input serial_input,
+    input load,
+    input direction,   // 0 = shift right, 1 = shift left
+    input reset,
+    input [3:0] parallel_load,
+    output reg [3:0] parallel_out
+);
+
+always @(posedge clk or posedge reset) begin
+    if (reset) begin
         parallel_out <= 4'b0;
     end 
     else if (load) begin
@@ -47,8 +63,5 @@ module tt_um_shift (
         endcase
     end
 end
-
-  // List all unused inputs to prevent warnings
-  wire _unused = &{ena,1'b0};
 
 endmodule
