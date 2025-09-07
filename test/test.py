@@ -58,7 +58,7 @@ async def test_project(dut):
     val |= (0b1100 << 3)
     dut.ui_in.value = val
     await RisingEdge(dut.clk)
-    dut.load.value = 0
+    dut.ui_in[0].value = 0
     #assert dut.uo_out[3:0].value == 0b1100, f"Second parallel load failed! Got {dut.uo_out[3:0].value}"
 
     # --- Final: Extra Right Shifts ---
